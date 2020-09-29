@@ -8,7 +8,7 @@ public class InputController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            BaseController.currentPoints += 10;
+            BaseCell.currentPoints -= 10;
         }
     }
 }
