@@ -437,7 +437,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 6924978601221449429, guid: 2298a6f54c1d1c24690d8c0abd6bc7d7, type: 3}
       propertyPath: m_Name
-      value: Base
+      value: BaseCell
       objectReference: {fileID: 0}
     - target: {fileID: 6924978601221449430, guid: 2298a6f54c1d1c24690d8c0abd6bc7d7, type: 3}
       propertyPath: maxPoints

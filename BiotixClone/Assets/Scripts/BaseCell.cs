@@ -15,7 +15,7 @@ public class BaseCell : MonoBehaviour
 	[Tooltip("Задает задержку между добавлением очков")]
 	[SerializeField] float gainDelay = .4f;
 
-	// Добавить спрайты для захваченной другим игроком/свободной ячейки
+	// Добавить спрайты для захваченной другим игроком/свободной ячейки (SetColor())
 
 	private void Start()
 	{
@@ -33,9 +33,7 @@ public class BaseCell : MonoBehaviour
 			StartCoroutine(PointsGain());
 			isCoroutineStarted = true;
 		}
-
 	}
-
 	private void LateUpdate()
 	{
 		Check();
