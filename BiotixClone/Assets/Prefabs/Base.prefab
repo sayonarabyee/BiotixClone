@@ -11,9 +11,10 @@ GameObject:
   - component: {fileID: 6924978601221449431}
   - component: {fileID: 6924978601221449428}
   - component: {fileID: 6924978601221449430}
+  - component: {fileID: 785061195}
   m_Layer: 0
   m_Name: Base
-  m_TagString: Untagged
+  m_TagString: cell
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -98,6 +99,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxPoints: 20
   gainDelay: 0.7
+--- !u!58 &785061195
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6924978601221449429}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.08
 --- !u!1 &6924978602155359370
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,44 +1,18 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class InputController : MonoBehaviour
+public class InputController : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
-    public Vector2 startPos;
-    public Vector2 direction;
-    string message;
-    void Update()
+    //Detect current clicks on the GameObject (the one with the script attached)
+    public void OnPointerDown(PointerEventData pointerEventData)
     {
-        /* if (Input.GetKeyDown(KeyCode.Space))
-		 {
-			 BaseCell.currentPoints -= 10;
-		 }*/
-        if (Input.touchCount > 0)
-        {
-            Touch touch = Input.GetTouch(0);
+        //Output the name of the GameObject that is being clicked
+        Debug.Log(name + "Game Object Click in Progress");
+    }
 
-            // Handle finger movements based on TouchPhase
-            switch (touch.phase)
-            {
-                //When a touch has first been detected, change the message and record the starting position
-                case TouchPhase.Began:
-                    // Record initial touch position.
-                    startPos = touch.position;
-                    message = "Begun ";
-                    break;
-
-                //Determine if the touch is a moving touch
-                case TouchPhase.Moved:
-                    // Determine direction by comparing the current touch position with the initial one
-                    direction = touch.position - startPos;
-                    message = "Moving ";
-                    break;
-
-                case TouchPhase.Ended:
-                    // Report that the touch has ended when it ends
-                    message = "Ending ";
-                    break;
-            }
-        }
+    //Detect if clicks are no longer registering
+    public void OnPointerUp(PointerEventData pointerEventData)
+    {
+        Debug.Log(name + "No longer being clicked");
     }
 }
