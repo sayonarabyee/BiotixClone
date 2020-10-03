@@ -19,7 +19,6 @@ public class InGameMenu : MonoBehaviour
 	}
 	public void Restart()
 	{
-		Scene currentScene = SceneManager.GetActiveScene();
-		SceneManager.LoadScene(currentScene.name);
+		SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 	}
 }
