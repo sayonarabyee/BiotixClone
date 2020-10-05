@@ -4,22 +4,26 @@ using UnityEngine.EventSystems;
 
 public class PointsController : Singleton<PointsController>, IDragHandler, IBeginDragHandler, IEndDragHandler, IPointerEnterHandler
 {
+    [Tooltip("Задает цвет команды игрока")]
+    [SerializeField] SetTeam playerTeam;
+
     public List<BaseCell> selectedCells = new List<BaseCell>();
-    public void AddCell(BaseCell cell)
+    public Transform Pointer;
+    [HideInInspector]
+    public bool isDrag;
+    public SetTeam PlayerTeam { get => playerTeam; set => playerTeam = value; }
+    public bool IsDrag { get => isDrag; set => isDrag = value; }
+
+    public bool AddCell(BaseCell cell)
     {
         if (!selectedCells.Contains(cell))
         {
             selectedCells.Add(cell);
-            foreach (var item in selectedCells)
-            {
-                print("Add to list");
-                print(item.ToString());
-                print(selectedCells);
-            }
+            return true;
         }
+        return false;
     }
-
-    public int SendPoints(List<BaseCell> list, params int [] points)
+    public int SendPoints(List<BaseCell> list)
     {
         int sum = default;
         foreach (var point in list)
@@ -30,19 +34,17 @@ public class PointsController : Singleton<PointsController>, IDragHandler, IBegi
     }
     public void OnBeginDrag(PointerEventData eventData)
     {
-        Debug.Log(eventData.position);
+        isDrag = true;
+        Pointer.position = eventData.position;
     }
     public void OnDrag(PointerEventData eventData)
-    {
-        Debug.Log(eventData.position);
+    {   
     }
     public void OnEndDrag(PointerEventData eventData)
     {
-        Debug.Log(eventData.position);
     }
 
     public void OnPointerEnter(PointerEventData eventData)
-    {
-        Debug.Log(eventData.position);
+    {   
     }
 }
