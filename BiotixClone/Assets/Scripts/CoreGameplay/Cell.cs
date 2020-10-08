@@ -4,9 +4,9 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class BaseCell : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler
+public class Cell : MonoBehaviour, IPointerEnterHandler/*, IPointerClickHandler*/, IPointerUpHandler
 {
-	public int currentPoints { get; set; } = 0;
+	private int currentPoints = 0;
 
 	private Image playerCell;
 	private TextMeshProUGUI count;
@@ -18,6 +18,15 @@ public class BaseCell : MonoBehaviour, IPointerEnterHandler, IPointerClickHandle
 	[SerializeField] float gainDelay = .4f;
 	[Tooltip("Задает владельца клетки")]
 	[SerializeField] SetTeam team;
+
+	public int Points
+	{
+		get => currentPoints;
+		set
+		{
+			currentPoints = value;
+		}
+	}
 	public SetTeam Team
 	{
 		get => team;
@@ -41,6 +50,30 @@ public class BaseCell : MonoBehaviour, IPointerEnterHandler, IPointerClickHandle
 		else
 			playerCell.color = team.TeamColor;
 
+	}
+	/*	public void ChangeCount()
+		{
+			count.SetText($"{currentPoints}");
+		}*/
+
+	public void AddToBranch(int Points, SetTeam team)
+	{
+		var x = currentPoints;
+		if (Team == team)
+			Points += currentPoints;
+		else
+		{
+			Points -= currentPoints;
+			if (Points < 0)
+			{
+				Team = team;
+				Points = currentPoints * -1;
+			}
+			if (Points == 0)
+			{
+				team = null;
+			}
+		}
 	}
 
 	#region PointsGaner
@@ -77,16 +110,39 @@ public class BaseCell : MonoBehaviour, IPointerEnterHandler, IPointerClickHandle
 	#region InputSystem
 	public void OnPointerEnter(PointerEventData eventData)
 	{
-		if (PointsController.Instance.PlayerTeam == team)
+		PointsController.Instance.cell = this;
+		if (PointsController.Instance.IsDrag)
 		{
-			if (PointsController.Instance.IsDrag)
+			if (PointsController.Instance.PlayerTeam == team)
 			{
-				PointsController.Instance.AddCell(this);
+				if (PointsController.Instance.AddCell(this))
+				{
+					return;
+				}
+				else if (PointsController.Instance.selectedCells.Count > 1)
+				{
+					PointsController.Instance.CreatePath();
+					PointsController.Instance.selectedCells.Clear();
+				}
+			}
+
+			else
+			{
+				if (PointsController.Instance.PlayerTeam != team && PointsController.Instance.selectedCells.Count < 1)
+				{
+					return;
+				}
+				else
+				{
+					PointsController.Instance.CreatePath();
+					PointsController.Instance.selectedCells.Clear();
+					PointsController.Instance.cell = this;
+				}
 			}
 		}
 	}
 
-	public void OnPointerClick(PointerEventData eventData)
+	/*public void OnPointerClick(PointerEventData eventData)
 	{
 		if (PointsController.Instance.PlayerTeam == team)
 		{
@@ -110,6 +166,35 @@ public class BaseCell : MonoBehaviour, IPointerEnterHandler, IPointerClickHandle
 			PointsController.Instance.selectedCells.Clear();
 			print("Send points");
 		}
+	}*/
+	public void OnPointerUp(PointerEventData eventData)
+	{
+		if (PointsController.Instance.selectedCells.Count > 0)
+		{
+			PointsController.Instance.CreatePath();
+			PointsController.Instance.selectedCells.Clear();
+			PointsController.Instance.cell = this;
+		}
 	}
 	#endregion
+
+
+#if UNITY_EDITOR
+	/*	public void OnMouseUp()
+		{
+			if (PointsController.Instance.selectedCells.Count > 0)
+			{
+				if (PointsController.Instance.PlayerTeam == team)
+				{
+					PointsController.Instance.selectedCells.Clear();
+					print("Send to ours");
+				}
+				else
+				{
+					PointsController.Instance.selectedCells.Clear();
+					print("Send points");
+				}
+			}
+		}*/
+#endif
 }

@@ -743,9 +743,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerTeam: {fileID: 1276981437}
+  isDrag: 0
+  pathPrefab: {fileID: -7532820439598951111, guid: aaa9f405088db6e428805bef5496a0e4, type: 3}
+  mainUI: {fileID: 1845131095}
   selectedCells: []
   Pointer: {fileID: 2060724358}
-  isDrag: 0
 --- !u!1001 &1982059476
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -950,7 +952,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2049066313}
   m_Layer: 0
-  m_Name: TeamColors
+  m_Name: TeamsColor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -6,15 +6,17 @@ public class PointsController : Singleton<PointsController>, IDragHandler, IBegi
 {
     [Tooltip("Задает цвет команды игрока")]
     [SerializeField] SetTeam playerTeam;
+    [HideInInspector] public bool isDrag;
+    [SerializeField] Path pathPrefab;
+    public Cell cell;
+    public Transform mainUI;
 
-    public List<BaseCell> selectedCells = new List<BaseCell>();
+    public List<Cell> selectedCells = new List<Cell>();
     public Transform Pointer;
-    [HideInInspector]
-    public bool isDrag;
     public SetTeam PlayerTeam { get => playerTeam; set => playerTeam = value; }
     public bool IsDrag { get => isDrag; set => isDrag = value; }
 
-    public bool AddCell(BaseCell cell)
+    public bool AddCell(Cell cell)
     {
         if (!selectedCells.Contains(cell))
         {
@@ -23,14 +25,19 @@ public class PointsController : Singleton<PointsController>, IDragHandler, IBegi
         }
         return false;
     }
-    public int SendPoints(List<BaseCell> list)
-    {
-        int sum = default;
-        foreach (var point in list)
+    public void CreatePath()
+	{
+        foreach (var item in selectedCells)
         {
-           // Сложить бактерии
+            if (item == cell) 
+                continue;
+
+            var x = Instantiate(pathPrefab, mainUI);
+            var value = item.Points / 2;
+            item.Points -= value;
+
+            x.Create(item.transform, PlayerTeam, cell, value);
         }
-        return sum;
     }
     public void OnBeginDrag(PointerEventData eventData)
     {
@@ -42,9 +49,19 @@ public class PointsController : Singleton<PointsController>, IDragHandler, IBegi
     }
     public void OnEndDrag(PointerEventData eventData)
     {
+        CompletePath();
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {   
+        
+    }
+    public void CompletePath()
+    {
+        if (cell)
+        {
+            CreatePath();
+        }
+        selectedCells.Clear();
     }
 }
