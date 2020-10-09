@@ -8,6 +8,7 @@ public class Path : MonoBehaviour
 	private SetTeam team;
 	private int points;
 	private float timeToMove;
+	[SerializeField] LineRenderer lineRenderer;
 
 	[SerializeField] float speed = 1f;
 
@@ -19,8 +20,10 @@ public class Path : MonoBehaviour
 	{
 		var from = FromScreenToWorld(createBranchFrom.transform.position);
 		var to = FromScreenToWorld(createBranchTo.transform.position);
-		timeToMove = Vector2.Distance(from, to) * speed;
+		timeToMove = Vector2.Distance(from, to) / speed;
 		StartCoroutine(Send());
+		lineRenderer.SetPosition(0, from);
+		lineRenderer.SetPosition(1, to);
 	}
 	private Vector3 FromScreenToWorld(Vector3 position)
 	{

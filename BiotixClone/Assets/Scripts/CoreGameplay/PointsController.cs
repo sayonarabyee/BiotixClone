@@ -2,17 +2,17 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class PointsController : Singleton<PointsController>, IDragHandler, IBeginDragHandler, IEndDragHandler, IPointerEnterHandler
+public class PointsController : Singleton<PointsController>, IBeginDragHandler, IEndDragHandler, IDragHandler
 {
     [Tooltip("Задает цвет команды игрока")]
     [SerializeField] SetTeam playerTeam;
-    [HideInInspector] public bool isDrag;
+    [HideInInspector] public bool isDrag = false;
     [SerializeField] Path pathPrefab;
     public Cell cell;
     public Transform mainUI;
 
     public List<Cell> selectedCells = new List<Cell>();
-    public Transform Pointer;
+    public Transform pointer;
     public SetTeam PlayerTeam { get => playerTeam; set => playerTeam = value; }
     public bool IsDrag { get => isDrag; set => isDrag = value; }
 
@@ -26,42 +26,35 @@ public class PointsController : Singleton<PointsController>, IDragHandler, IBegi
         return false;
     }
     public void CreatePath()
-	{
-        foreach (var item in selectedCells)
+    {
+        if (cell == true)
         {
-            if (item == cell) 
-                continue;
+            foreach (var item in selectedCells)
+            {
+                if (item == cell)
+                    continue;
 
-            var x = Instantiate(pathPrefab, mainUI);
-            var value = item.Points / 2;
-            item.Points -= value;
+                var x = Instantiate(pathPrefab, mainUI);
+                var value = item.Points / 2;
+                item.Points -= value;
 
-            x.Create(item.transform, PlayerTeam, cell, value);
+                x.Create(item.transform, PlayerTeam, cell, value);
+            }
         }
-    }
+        selectedCells.Clear();
+    } 
     public void OnBeginDrag(PointerEventData eventData)
     {
         isDrag = true;
-        Pointer.position = eventData.position;
     }
     public void OnDrag(PointerEventData eventData)
-    {   
+    {
+        pointer.position = eventData.position;
     }
     public void OnEndDrag(PointerEventData eventData)
     {
-        CompletePath();
-    }
-
-    public void OnPointerEnter(PointerEventData eventData)
-    {   
-        
-    }
-    public void CompletePath()
-    {
-        if (cell)
-        {
-            CreatePath();
-        }
-        selectedCells.Clear();
+        CreatePath();
     }
 }
+
+

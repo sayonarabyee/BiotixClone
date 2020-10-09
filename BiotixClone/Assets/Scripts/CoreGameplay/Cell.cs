@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class Cell : MonoBehaviour, IPointerEnterHandler/*, IPointerClickHandler*/, IPointerUpHandler
+public class Cell : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler, IPointerExitHandler
 {
 	private int currentPoints = 0;
 
@@ -18,7 +18,7 @@ public class Cell : MonoBehaviour, IPointerEnterHandler/*, IPointerClickHandler*
 	[SerializeField] float gainDelay = .4f;
 	[Tooltip("Задает владельца клетки")]
 	[SerializeField] SetTeam team;
-
+	[SerializeField] LineRenderer lineRenderer;
 	public int Points
 	{
 		get => currentPoints;
@@ -48,32 +48,36 @@ public class Cell : MonoBehaviour, IPointerEnterHandler/*, IPointerClickHandler*
 		if (team == null)
 			playerCell.color = Color.white;
 		else
+
 			playerCell.color = team.TeamColor;
 
 	}
-	/*	public void ChangeCount()
-		{
-			count.SetText($"{currentPoints}");
-		}*/
 
 	public void AddToBranch(int Points, SetTeam team)
 	{
-		var x = currentPoints;
 		if (Team == team)
-			Points += currentPoints;
+		{
+			currentPoints += Points;
+		}
 		else
 		{
-			Points -= currentPoints;
-			if (Points < 0)
+			currentPoints -= Points;
+			if (currentPoints < 0)
 			{
+				currentPoints *= -1;
 				Team = team;
-				Points = currentPoints * -1;
 			}
-			if (Points == 0)
+			else if (currentPoints == 0)
 			{
 				team = null;
 			}
 		}
+	}
+	private Vector3 FromScreenToWorld(Vector3 position)
+	{
+		var pos = Camera.main.ScreenToWorldPoint(position);
+		pos.z = 0f;
+		return position;
 	}
 
 	#region PointsGaner
@@ -88,6 +92,14 @@ public class Cell : MonoBehaviour, IPointerEnterHandler/*, IPointerClickHandler*
 	}
 	private void LateUpdate()
 	{
+		if (PointsController.Instance.isDrag)
+		{
+			var from = FromScreenToWorld(this.transform.position);
+			var to = FromScreenToWorld(PointsController.Instance.pointer.position);
+			lineRenderer.SetPosition(0, from);
+			lineRenderer.SetPosition(1, to);
+		}
+
 		Check();
 		count.SetText($"{currentPoints}");
 	}
@@ -111,90 +123,50 @@ public class Cell : MonoBehaviour, IPointerEnterHandler/*, IPointerClickHandler*
 	public void OnPointerEnter(PointerEventData eventData)
 	{
 		PointsController.Instance.cell = this;
-		if (PointsController.Instance.IsDrag)
+		if (PointsController.Instance.isDrag)
 		{
 			if (PointsController.Instance.PlayerTeam == team)
 			{
 				if (PointsController.Instance.AddCell(this))
 				{
-					return;
-				}
-				else if (PointsController.Instance.selectedCells.Count > 1)
-				{
-					PointsController.Instance.CreatePath();
-					PointsController.Instance.selectedCells.Clear();
+
 				}
 			}
-
-			else
+			else if (PointsController.Instance.PlayerTeam != team && PointsController.Instance.selectedCells.Count >= 1)
 			{
-				if (PointsController.Instance.PlayerTeam != team && PointsController.Instance.selectedCells.Count < 1)
-				{
-					return;
-				}
-				else
-				{
-					PointsController.Instance.CreatePath();
-					PointsController.Instance.selectedCells.Clear();
-					PointsController.Instance.cell = this;
-				}
+				PointsController.Instance.cell = this;
 			}
 		}
 	}
 
-	/*public void OnPointerClick(PointerEventData eventData)
+	public void OnPointerExit(PointerEventData eventData)
 	{
+		if (PointsController.Instance.cell == this)
+		{
+			PointsController.Instance.cell = null;
+		}
+	}
+
+	public void OnPointerClick(PointerEventData eventData)
+	{
+		PointsController.Instance.cell = this;
 		if (PointsController.Instance.PlayerTeam == team)
 		{
 			if (PointsController.Instance.AddCell(this))
 			{
-				print("Added to list");
+				return;
 			}
-			else if (PointsController.Instance.selectedCells.Count > 1)
+			else
 			{
-				print("Send to ours");
-				PointsController.Instance.selectedCells.Clear();
+				PointsController.Instance.CreatePath();
 			}
 		}
-		else if (PointsController.Instance.PlayerTeam != team && PointsController.Instance.selectedCells.Count < 1)
+		else if (PointsController.Instance.PlayerTeam != team && PointsController.Instance.selectedCells.Count >= 1)
 		{
-			print("nothing happens");
-			return;
-		}
-		else
-		{
-			PointsController.Instance.selectedCells.Clear();
-			print("Send points");
-		}
-	}*/
-	public void OnPointerUp(PointerEventData eventData)
-	{
-		if (PointsController.Instance.selectedCells.Count > 0)
-		{
-			PointsController.Instance.CreatePath();
-			PointsController.Instance.selectedCells.Clear();
 			PointsController.Instance.cell = this;
+			PointsController.Instance.CreatePath();
+
 		}
 	}
 	#endregion
-
-
-#if UNITY_EDITOR
-	/*	public void OnMouseUp()
-		{
-			if (PointsController.Instance.selectedCells.Count > 0)
-			{
-				if (PointsController.Instance.PlayerTeam == team)
-				{
-					PointsController.Instance.selectedCells.Clear();
-					print("Send to ours");
-				}
-				else
-				{
-					PointsController.Instance.selectedCells.Clear();
-					print("Send points");
-				}
-			}
-		}*/
-#endif
 }
