@@ -91,10 +91,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f546fe69078ccd74e972fab93849d008, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lineRenderer: {fileID: 3058594249441494688}
   maxPoints: 20
   gainDelay: 0.8
   team: {fileID: 0}
+  lineRenderer: {fileID: 3058594249441494688}
 --- !u!120 &3058594249441494688
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -114,7 +114,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

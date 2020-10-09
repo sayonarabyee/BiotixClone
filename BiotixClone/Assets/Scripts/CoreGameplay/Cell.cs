@@ -77,7 +77,7 @@ public class Cell : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler, I
 	{
 		var pos = Camera.main.ScreenToWorldPoint(position);
 		pos.z = 0f;
-		return position;
+		return pos;
 	}
 
 	#region PointsGaner
@@ -94,11 +94,21 @@ public class Cell : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler, I
 	{
 		if (PointsController.Instance.isDrag)
 		{
-			var from = FromScreenToWorld(this.transform.position);
-			var to = FromScreenToWorld(PointsController.Instance.pointer.position);
-			lineRenderer.SetPosition(0, from);
-			lineRenderer.SetPosition(1, to);
+			if (PointsController.Instance.selectedCells.Contains(this))
+			{
+				var from = FromScreenToWorld( this.transform.position);
+				var to = FromScreenToWorld(PointsController.Instance.pointer.position);
+				lineRenderer.SetPosition(0, from);
+				lineRenderer.SetPosition(1, to);
+			lineRenderer.enabled = true;
+			}
+			else
+			{
+
+				lineRenderer.enabled = false;
+			}
 		}
+		
 
 		Check();
 		count.SetText($"{currentPoints}");
