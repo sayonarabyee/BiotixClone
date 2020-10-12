@@ -48,7 +48,6 @@ public class Cell : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler, I
 		if (team == null)
 			playerCell.color = Color.white;
 		else
-
 			playerCell.color = team.TeamColor;
 
 	}
@@ -96,20 +95,17 @@ public class Cell : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler, I
 		{
 			if (PointsController.Instance.selectedCells.Contains(this))
 			{
-				var from = FromScreenToWorld( this.transform.position);
+				var from = FromScreenToWorld(transform.position);
 				var to = FromScreenToWorld(PointsController.Instance.pointer.position);
 				lineRenderer.SetPosition(0, from);
 				lineRenderer.SetPosition(1, to);
-			lineRenderer.enabled = true;
+				lineRenderer.enabled = true;
 			}
 			else
 			{
-
 				lineRenderer.enabled = false;
 			}
 		}
-		
-
 		Check();
 		count.SetText($"{currentPoints}");
 	}

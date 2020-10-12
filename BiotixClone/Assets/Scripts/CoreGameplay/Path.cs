@@ -1,15 +1,16 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Path : MonoBehaviour
 {
+	private int points;
 	private Transform createBranchFrom;
 	private Cell createBranchTo;
 	private SetTeam team;
-	private int points;
 	private float timeToMove;
-	[SerializeField] LineRenderer lineRenderer;
 
+	[SerializeField] Transform cellPrefab;
 	[SerializeField] float speed = 1f;
 
 	public Transform CreateBranchFrom { get => createBranchFrom; set => createBranchFrom = value; }
@@ -21,9 +22,8 @@ public class Path : MonoBehaviour
 		var from = FromScreenToWorld(createBranchFrom.transform.position);
 		var to = FromScreenToWorld(createBranchTo.transform.position);
 		timeToMove = Vector2.Distance(from, to) / speed;
+		cellPrefab.position = Vector2.Lerp(createBranchFrom.transform.position, createBranchTo.transform.position, timeToMove / 2);
 		StartCoroutine(Send());
-		lineRenderer.SetPosition(0, from);
-		lineRenderer.SetPosition(1, to);
 	}
 	private Vector3 FromScreenToWorld(Vector3 position)
 	{
@@ -41,7 +41,8 @@ public class Path : MonoBehaviour
 	IEnumerator Send()
 	{
 		yield return new WaitForSeconds(timeToMove);
-
+		
 		CreateBranchTo.AddToBranch(Points, team);
+		Destroy(gameObject, timeToMove / 2);
 	}
 }
