@@ -5,8 +5,8 @@ using UnityEngine.UI;
 public class Path : MonoBehaviour
 {
 	private int points;
-	private Transform createBranchFrom;
-	private Cell createBranchTo;
+	[SerializeField] Transform createBranchFrom;
+	[SerializeField] Cell createBranchTo;
 	private SetTeam team;
 	private float timeToMove;
 
@@ -22,14 +22,13 @@ public class Path : MonoBehaviour
 		var from = FromScreenToWorld(createBranchFrom.transform.position);
 		var to = FromScreenToWorld(createBranchTo.transform.position);
 		timeToMove = Vector2.Distance(from, to) / speed;
-		cellPrefab.position = Vector2.Lerp(createBranchFrom.transform.position, createBranchTo.transform.position, timeToMove / 2);
-		StartCoroutine(Send());
+		StartCoroutine(Send(timeToMove, from, to));
 	}
 	private Vector3 FromScreenToWorld(Vector3 position)
 	{
 		var pos = Camera.main.ScreenToWorldPoint(position);
 		pos.z = 0f;
-		return position;
+		return pos;
 	}
 	public void Create(Transform from, SetTeam team, Cell to, int points)
 	{
@@ -38,11 +37,14 @@ public class Path : MonoBehaviour
 		this.createBranchTo = to;
 		this.points = points;
 	}
-	IEnumerator Send()
+	IEnumerator Send(float time, Vector2 from, Vector2 to)
 	{
-		yield return new WaitForSeconds(timeToMove);
-		
+		for (float i = 0; i < time; i += Time.deltaTime)
+		{
+			cellPrefab.position = Vector2.Lerp(from, to, i / time);
+			yield return null;
+		}
 		CreateBranchTo.AddToBranch(Points, team);
-		Destroy(gameObject, timeToMove / 2);
+		Destroy(gameObject);
 	}
 }
