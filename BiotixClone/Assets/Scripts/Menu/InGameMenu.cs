@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class InGameMenu : MonoBehaviour
@@ -17,6 +18,6 @@ public class InGameMenu : MonoBehaviour
 	}
 	public void Restart()
 	{
-		SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+		SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
 	}
 }

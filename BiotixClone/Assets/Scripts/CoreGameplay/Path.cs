@@ -15,13 +15,12 @@ public class Path : MonoBehaviour
 	public Transform CreateBranchFrom { get => createBranchFrom; set => createBranchFrom = value; }
 	public Cell CreateBranchTo { get => createBranchTo; set => createBranchTo = value; }
 	public int Points { get => points; set => points = value; }
-
 	private void Start()
 	{
 		var from = FromScreenToWorld(createBranchFrom.transform.position);
 		var to = FromScreenToWorld(createBranchTo.transform.position);
 		timeToMove = Vector2.Distance(from, to) / speed;
-		StartCoroutine(Send(timeToMove, from, to)); 
+		StartCoroutine(Send(timeToMove, from, to));
 	}
 	private Vector3 FromScreenToWorld(Vector3 position)
 	{
