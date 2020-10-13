@@ -47,7 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   createBranchFrom: {fileID: 0}
   createBranchTo: {fileID: 0}
-  cellPrefab: {fileID: 7259397627973595228}
+  particlePrefab: {fileID: 7259397627973595228}
   speed: 1
 --- !u!120 &3790525067824002440
 LineRenderer:

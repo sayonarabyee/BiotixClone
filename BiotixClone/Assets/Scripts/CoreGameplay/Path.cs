@@ -9,7 +9,7 @@ public class Path : MonoBehaviour
 	private SetTeam team;
 	private float timeToMove;
 
-	[SerializeField] Transform cellPrefab;
+	[SerializeField] Transform particlePrefab;
 	[SerializeField] float speed = 1f;
 
 	public Transform CreateBranchFrom { get => createBranchFrom; set => createBranchFrom = value; }
@@ -40,7 +40,10 @@ public class Path : MonoBehaviour
 	{
 		for (float i = 0; i < time; i += Time.deltaTime)
 		{
-			cellPrefab.position = Vector2.Lerp(from, to, i / time);
+			var particle = particlePrefab.GetComponentInChildren<ParticleSystem>();
+			particle.maxParticles = points;
+			particle.startColor = team.TeamColor;
+			particlePrefab.position = Vector2.Lerp(from, to, i / time);
 			yield return null;
 		}
 		CreateBranchTo.AddToBranch(Points, team);
