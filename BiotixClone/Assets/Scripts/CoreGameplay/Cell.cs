@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -19,6 +20,7 @@ public class Cell : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler, I
 	[Tooltip("Задает владельца клетки")]
 	[SerializeField] SetTeam team;
 	[SerializeField] LineRenderer lineRenderer;
+
 	public int Points
 	{
 		get => currentPoints;
@@ -42,6 +44,7 @@ public class Cell : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler, I
 	}
 	private void Start()
 	{
+		currentPoints = maxPoints;
 		playerCell = GetComponent<Image>();
 		count = GetComponentInChildren<TextMeshProUGUI>();
 
@@ -49,7 +52,6 @@ public class Cell : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler, I
 			playerCell.color = Color.white;
 		else
 			playerCell.color = team.TeamColor;
-
 	}
 
 	public void AddToBranch(int Points, SetTeam team)
@@ -79,12 +81,11 @@ public class Cell : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler, I
 		return pos;
 	}
 
-	#region PointsGaner
+	#region PointsGaner+Linerenderer
 	private void Check()
 	{
-		if (!isCoroutineStarted && (currentPoints < maxPoints))
+		if (!isCoroutineStarted && currentPoints != maxPoints && team != null)
 		{
-			isCoroutineStarted = false;
 			StartCoroutine(PointsGain());
 			isCoroutineStarted = true;
 		}
@@ -102,25 +103,40 @@ public class Cell : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler, I
 				lineRenderer.enabled = true;
 			}
 			else
-			{
 				lineRenderer.enabled = false;
-			}
 		}
 		Check();
 		count.SetText($"{currentPoints}");
 	}
 	IEnumerator PointsGain()
 	{
-		isCoroutineStarted = true;
-		while (currentPoints < maxPoints)
+		if (currentPoints < maxPoints)
 		{
-			currentPoints += 1;
-			yield return new WaitForSeconds(gainDelay);
-			if (currentPoints == maxPoints)
+			isCoroutineStarted = true;
+			while (currentPoints < maxPoints)
 			{
-				isCoroutineStarted = false;
-				StopCoroutine(PointsGain());
+				currentPoints += 1;
+				yield return new WaitForSeconds(gainDelay);
 			}
+		}
+		if (currentPoints > maxPoints)
+		{
+			isCoroutineStarted = true;
+			while (currentPoints > maxPoints)
+			{
+				currentPoints -= 1;
+				yield return new WaitForSeconds(gainDelay);
+			}
+			if(currentPoints < maxPoints)
+			{
+				isCoroutineStarted = true;
+				StartCoroutine(PointsGain());
+			}
+		}
+		else
+		{
+			isCoroutineStarted = false;
+			StopCoroutine(PointsGain());
 		}
 	}
 	#endregion

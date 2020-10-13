@@ -21,7 +21,7 @@ public class Path : MonoBehaviour
 		var from = FromScreenToWorld(createBranchFrom.transform.position);
 		var to = FromScreenToWorld(createBranchTo.transform.position);
 		timeToMove = Vector2.Distance(from, to) / speed;
-		StartCoroutine(Send(timeToMove, from, to));
+		StartCoroutine(Send(timeToMove, from, to)); 
 	}
 	private Vector3 FromScreenToWorld(Vector3 position)
 	{
