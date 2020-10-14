@@ -2,7 +2,7 @@
 
 public class SetTeam : MonoBehaviour
 {
-	[Tooltip("Задает цвет команды игрока")]
+    [Header("Задает цвет команды игрока/бота")]
 	[SerializeField] Color teamColor;
 	public Color TeamColor { get => teamColor; set => teamColor = value; }
 }

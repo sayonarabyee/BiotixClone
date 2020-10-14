@@ -92,9 +92,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxPoints: 20
-  gainDelay: 0.8
+  gainDelay: 0.2
   team: {fileID: 0}
   lineRenderer: {fileID: 3058594249441494688}
+  onChangeTeam:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!120 &3058594249441494688
 LineRenderer:
   m_ObjectHideFlags: 0

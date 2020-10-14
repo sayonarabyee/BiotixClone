@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-
+[RequireComponent(typeof(Animator))]
 public class CircleAnimation : MonoBehaviour
 {
 	[SerializeField] Animator circle;

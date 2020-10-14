@@ -1,8 +1,12 @@
 ﻿using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+
+[RequireComponent(typeof(Image))]
+[RequireComponent(typeof(TextMeshProUGUI))]
 
 public class Cell : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler, IPointerExitHandler
 {
@@ -19,6 +23,8 @@ public class Cell : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler, I
 	[Tooltip("Задает владельца клетки")]
 	[SerializeField] SetTeam team;
 	[SerializeField] LineRenderer lineRenderer;
+
+	public UnityEvent onChangeTeam;
 
 	public int Points
 	{
@@ -51,6 +57,9 @@ public class Cell : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler, I
 			playerCell.color = Color.white;
 		else
 			playerCell.color = team.TeamColor;
+
+		onChangeTeam.AddListener(EndGameCheck.Instance.Check);
+		onChangeTeam.AddListener(Bot.Instance.OnCellChangeTeam);
 	}
 
 	public void AddToBranch(int Points, SetTeam team)
@@ -66,6 +75,7 @@ public class Cell : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler, I
 			{
 				currentPoints *= -1;
 				Team = team;
+				onChangeTeam?.Invoke();
 			}
 			else if (currentPoints == 0)
 			{

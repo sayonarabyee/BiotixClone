@@ -4,15 +4,15 @@ using UnityEngine.EventSystems;
 
 public class PointsController : Singleton<PointsController>, IBeginDragHandler, IEndDragHandler, IDragHandler
 {
-    [Tooltip("Задает цвет команды игрока")]
     [SerializeField] SetTeam playerTeam;
     [HideInInspector] public bool isDrag = false;
     [SerializeField] Path pathPrefab;
+    [HideInInspector] public List<Cell> selectedCells = new List<Cell>();
+
     public Cell cell;
     public Transform mainUI;
-
-    public List<Cell> selectedCells = new List<Cell>();
     public Transform pointer;
+
     public SetTeam PlayerTeam { get => playerTeam; set => playerTeam = value; }
     public bool IsDrag { get => isDrag; set => isDrag = value; }
 
