@@ -33,6 +33,7 @@ RectTransform:
   m_Children:
   - {fileID: 7427146292656117130}
   - {fileID: 1224253200655149889}
+  - {fileID: 5241828621842314266}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -91,13 +92,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f546fe69078ccd74e972fab93849d008, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentPoints: 15
   maxPoints: 20
-  gainDelay: 0.2
+  gainDelay: 0.8
   team: {fileID: 0}
   lineRenderer: {fileID: 3058594249441494688}
   onChangeTeam:
     m_PersistentCalls:
       m_Calls: []
+  selectedCellSprite: {fileID: 9119496114664112698}
 --- !u!120 &3058594249441494688
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -439,3 +442,112 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   circle: {fileID: 6635692871609009602}
+--- !u!1 &9119496114664112698
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5241828621842314266}
+  - component: {fileID: 8921079962305223268}
+  - component: {fileID: 808298901194952905}
+  - component: {fileID: 7314521292904811890}
+  - component: {fileID: 1414831219506995674}
+  m_Layer: 5
+  m_Name: Selected
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &5241828621842314266
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9119496114664112698}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7427146292528264940}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 1.25, y: -1.75}
+  m_SizeDelta: {x: 127.495605, y: 128.49384}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &8921079962305223268
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9119496114664112698}
+  m_CullTransparentMesh: 0
+--- !u!114 &808298901194952905
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9119496114664112698}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: b3e2789f303425642a7d6529cb85a565, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!95 &7314521292904811890
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9119496114664112698}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: ded11738e56da804390b2939cea85a00, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &1414831219506995674
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9119496114664112698}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f61ee1f27bfcada4581ae62f3bee7d3a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  circle: {fileID: 7314521292904811890}

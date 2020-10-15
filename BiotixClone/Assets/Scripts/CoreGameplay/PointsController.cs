@@ -4,6 +4,7 @@ using UnityEngine.EventSystems;
 
 public class PointsController : Singleton<PointsController>, IBeginDragHandler, IEndDragHandler, IDragHandler
 {
+    [Header("Задает цвет игрока")]
     [SerializeField] SetTeam playerTeam;
     [HideInInspector] public bool isDrag = false;
     [SerializeField] Path pathPrefab;

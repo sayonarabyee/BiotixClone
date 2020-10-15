@@ -10,21 +10,21 @@ using UnityEngine.UI;
 
 public class Cell : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler, IPointerExitHandler
 {
-	private int currentPoints = 0;
-
 	private Image playerCell;
 	private TextMeshProUGUI count;
 	private bool isCoroutineStarted = false;
 
-	[Tooltip("Задает максимальное количество очков базы")]
+	[Header("Задает текущее количество очков базы")]
+	[SerializeField] private int currentPoints = 0;
+	[Header("Задает максимальное количество очков базы")]
 	[SerializeField] int maxPoints = 20;
-	[Tooltip("Задает задержку между добавлением очков")]
+	[Header("Задает задержку между добавлением очков")]
 	[SerializeField] float gainDelay = .4f;
-	[Tooltip("Задает владельца клетки")]
+	[Header("Задает владельца клетки")]
 	[SerializeField] SetTeam team;
 	[SerializeField] LineRenderer lineRenderer;
-
-	public UnityEvent onChangeTeam;
+	[HideInInspector] public UnityEvent onChangeTeam;
+	[SerializeField] GameObject selectedCellSprite;
 
 	public int Points
 	{
@@ -49,7 +49,7 @@ public class Cell : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler, I
 	}
 	private void Start()
 	{
-		currentPoints = maxPoints;
+		//currentPoints = maxPoints;
 		playerCell = GetComponent<Image>();
 		count = GetComponentInChildren<TextMeshProUGUI>();
 
@@ -105,6 +105,7 @@ public class Cell : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler, I
 		{
 			if (PointsController.Instance.selectedCells.Contains(this))
 			{
+				selectedCellSprite.SetActive(true);
 				var from = FromScreenToWorld(transform.position);
 				var to = FromScreenToWorld(PointsController.Instance.pointer.position);
 				lineRenderer.SetPosition(0, from);
@@ -112,7 +113,11 @@ public class Cell : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler, I
 				lineRenderer.enabled = true;
 			}
 			else
+			{
+				selectedCellSprite.SetActive(false);
 				lineRenderer.enabled = false;
+			}
+				
 		}
 		Check();
 		count.SetText($"{currentPoints}");
@@ -154,6 +159,7 @@ public class Cell : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler, I
 	public void OnPointerEnter(PointerEventData eventData)
 	{
 		PointsController.Instance.cell = this;
+
 		if (PointsController.Instance.isDrag)
 		{
 			if (PointsController.Instance.PlayerTeam == team)
@@ -196,7 +202,6 @@ public class Cell : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler, I
 		{
 			PointsController.Instance.cell = this;
 			PointsController.Instance.CreatePath();
-
 		}
 	}
 	#endregion

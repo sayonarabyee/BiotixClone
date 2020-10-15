@@ -1,8 +1,21 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
+	[SerializeField] Button[] lvlButtons;
+	
+	void Start()
+	{
+		int levelAt = PlayerPrefs.GetInt("levelAt", 1);
+
+		for (int i = 0; i < lvlButtons.Length; i++)
+		{
+			if (i + 1 > levelAt)
+				lvlButtons[i].interactable = false;
+		}
+	}
 	public void LoadLevel1()
 	{
 		SceneManager.LoadScene("Level1");
