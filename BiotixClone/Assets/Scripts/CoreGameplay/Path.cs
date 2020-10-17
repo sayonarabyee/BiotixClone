@@ -37,9 +37,9 @@ public class Path : MonoBehaviour
 	}
 	IEnumerator Send(float time, Vector2 from, Vector2 to)
 	{
+		var particle = particlePrefab.GetComponentInChildren<ParticleSystem>();
 		for (float i = 0; i < time; i += Time.deltaTime)
 		{
-			var particle = particlePrefab.GetComponentInChildren<ParticleSystem>();
 			particle.maxParticles = points;
 			particle.startColor = team.TeamColor;
 			particlePrefab.position = Vector2.Lerp(from, to, i / time);

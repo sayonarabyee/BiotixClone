@@ -49,7 +49,6 @@ public class Cell : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler, I
 	}
 	private void Start()
 	{
-		//currentPoints = maxPoints;
 		playerCell = GetComponent<Image>();
 		count = GetComponentInChildren<TextMeshProUGUI>();
 

@@ -28,25 +28,21 @@ public class EndGameCheck : Singleton<EndGameCheck>
 
 		if (botCount <= 0)
 		{
-			ShowADS();
-			Invoke("CheckLevelIfWin", 5f);
+			ShowADSWin();
 		}
 		else if (playerCount <= 0)
 		{
-			ShowADS();
-			Invoke("CheckLeveIfLose", 5f);
-		}	
-	}
-	private void ShowADS()
-	{
-		if (Advertisement.IsReady())
-		{
-			Advertisement.Show();
+			ShowADSLose();
 		}
 	}
-	private void CheckLevelIfWin()
+
+	private void Win()
 	{
-		if (SceneManager.GetActiveScene().buildIndex == 4)
+		/*		loader.currentOpenedLevel++;
+				PlayerPrefs.SetInt("currentOpenedLevel", loader.currentOpenedLevel);*/
+		LevelLoader.Instance.LoadNextLevel();
+
+		/*if (SceneManager.GetActiveScene().buildIndex == 4)
 			SceneManager.LoadScene("MainMenu");
 		else
 		{
@@ -54,13 +50,59 @@ public class EndGameCheck : Singleton<EndGameCheck>
 
 			if (nextSceneLoad > PlayerPrefs.GetInt("levelAt"))
 				PlayerPrefs.SetInt("levelAt", nextSceneLoad);
-		}
+		}*/
 	}
-	private void CheckLeveIfLose()
+	private void Lose()
 	{
 		if (SceneManager.GetActiveScene().buildIndex == 4)
 			SceneManager.LoadScene("MainMenu");
 		else
 			SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+	}
+	private void ShowADSWin()
+	{
+		if (Advertisement.IsReady())
+		{
+			var options = new ShowOptions { resultCallback = ShowResultWin };
+			Advertisement.Show(options);
+			//Advertisement.Show();
+		}
+	}
+	private void ShowADSLose()
+	{
+		if (Advertisement.IsReady())
+		{
+			var options = new ShowOptions { resultCallback = ShowResultLose };
+			Advertisement.Show(options);
+			//Advertisement.Show();
+		}
+	}
+	private void ShowResultWin(ShowResult result)
+	{
+		switch (result)
+		{
+			case ShowResult.Finished:
+				Debug.Log("The ad was successfully shown.");
+				Win();
+				break;
+			case ShowResult.Skipped:
+				Debug.Log("The ad was skipped before reaching the end.");
+				Win();
+				break;
+		}
+	}
+	private void ShowResultLose(ShowResult result)
+	{
+		switch (result)
+		{
+			case ShowResult.Finished:
+				Debug.Log("The ad was successfully shown.");
+				Lose();
+				break;
+			case ShowResult.Skipped:
+				Debug.Log("The ad was skipped before reaching the end.");
+				Lose();
+				break;
+		}
 	}
 }
