@@ -153,9 +153,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelPrefabs:
-  - {fileID: 3514081688319723572, guid: dab8404f475e9964894e3fa1517f6ec5, type: 3}
+  - {fileID: 8930230369276037483, guid: 37e892d60a17e464192914d71f4130c0, type: 3}
   - {fileID: 8012162838490379147, guid: 626e85f009f66704684aa2badd74b3d6, type: 3}
   - {fileID: 1759144057768466861, guid: 463f49c3236a3754a90b86dcdee286c1, type: 3}
+  selectLevel: {fileID: 0}
 --- !u!4 &175080702
 Transform:
   m_ObjectHideFlags: 0
