@@ -2,11 +2,10 @@
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class MainMenu : MonoBehaviour
+public class MainMenu : Singleton<MainMenu>
 {
 	[SerializeField] Button[] lvlButtons;
-	
-	void Start()
+	private void Start()
 	{
 		int openedLevel = PlayerPrefs.GetInt("currentOpenedLevel", 0);
 
@@ -16,6 +15,10 @@ public class MainMenu : MonoBehaviour
 				lvlButtons[i].interactable = false;
 		}
 	}
-	public void LoadLevel() => SceneManager.LoadScene("Game");
+	public void LoadLevel(int level) 
+	{
+		LevelLoader.currentOpenedLevel = level;
+		SceneManager.LoadSceneAsync("Game");
+	}
 	public void QuitGame() => Application.Quit();
 }

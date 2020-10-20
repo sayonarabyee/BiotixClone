@@ -180,10 +180,13 @@ public class Cell : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler, I
 		if (PointsController.Instance.PlayerTeam == team)
 		{
 			if (PointsController.Instance.AddCell(this))
+			{
 				return;
-
+			}
 			else
+			{
 				PointsController.Instance.CreatePath();
+			}
 		}
 		else if (PointsController.Instance.PlayerTeam != team && PointsController.Instance.selectedCells.Count >= 1)
 		{
@@ -193,3 +196,20 @@ public class Cell : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler, I
 	}
 	#endregion
 }
+/*PointsController.Instance.cell = this;
+		if (PointsController.Instance.PlayerTeam == team)
+		{
+			if (PointsController.Instance.AddCell(this))
+			{
+				return;
+			}
+			else
+			{
+				PointsController.Instance.CreatePath();
+			}
+		}
+		else if (PointsController.Instance.PlayerTeam != team && PointsController.Instance.selectedCells.Count >= 1)
+		{
+			PointsController.Instance.cell = this;
+			PointsController.Instance.CreatePath();
+		}*/

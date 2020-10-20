@@ -25,10 +25,12 @@ public class EndGameCheck : Singleton<EndGameCheck>
 
 		if (botCount <= 0)
 		{
+			Time.timeScale = 0f;
 			ShowADSWin();
 		}
 		else if (playerCount <= 0)
 		{
+			Time.timeScale = 0f;
 			ShowADSLose();
 		}
 	}

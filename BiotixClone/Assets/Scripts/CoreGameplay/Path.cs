@@ -10,6 +10,7 @@ public class Path : MonoBehaviour
 	private float timeToMove;
 
 	[SerializeField] Transform particlePrefab;
+	[Header("Задает скорость всех частиц в игре")]
 	[SerializeField] float speed = 1f;
 
 	public Transform CreateBranchFrom { get => createBranchFrom; set => createBranchFrom = value; }
@@ -35,13 +36,17 @@ public class Path : MonoBehaviour
 		this.createBranchTo = to;
 		this.points = points;
 	}
-	IEnumerator Send(float time, Vector2 from, Vector2 to)
+	private void SetParticle()
 	{
 		var particle = particlePrefab.GetComponentInChildren<ParticleSystem>();
+		particle.maxParticles = points;
+		particle.startColor = team.TeamColor;
+	}
+	IEnumerator Send(float time, Vector2 from, Vector2 to)
+	{
+		SetParticle();
 		for (float i = 0; i < time; i += Time.deltaTime)
 		{
-			particle.maxParticles = points;
-			particle.startColor = team.TeamColor;
 			particlePrefab.position = Vector2.Lerp(from, to, i / time);
 			yield return null;
 		}

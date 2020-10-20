@@ -3557,6 +3557,22 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6443417716632722081, guid: 6cece64a6a9c2ed478e759b0d08b2719, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6443417716632722081, guid: 6cece64a6a9c2ed478e759b0d08b2719, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6443417716632722081, guid: 6cece64a6a9c2ed478e759b0d08b2719, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 1017.7573
+      objectReference: {fileID: 0}
+    - target: {fileID: 6443417716632722081, guid: 6cece64a6a9c2ed478e759b0d08b2719, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 572.4885
+      objectReference: {fileID: 0}
     - target: {fileID: 6443417716857735828, guid: 6cece64a6a9c2ed478e759b0d08b2719, type: 3}
       propertyPath: m_Name
       value: InGameMenu
@@ -3604,6 +3620,10 @@ PrefabInstance:
     - target: {fileID: 6443417716857735829, guid: 6cece64a6a9c2ed478e759b0d08b2719, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6443417717351599968, guid: 6cece64a6a9c2ed478e759b0d08b2719, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6443417717351599969, guid: 6cece64a6a9c2ed478e759b0d08b2719, type: 3}
       propertyPath: m_LocalRotation.x
