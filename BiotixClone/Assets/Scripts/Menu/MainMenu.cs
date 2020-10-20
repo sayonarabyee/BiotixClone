@@ -8,25 +8,14 @@ public class MainMenu : MonoBehaviour
 	
 	void Start()
 	{
-		int levelAt = PlayerPrefs.GetInt("levelAt", 0);
+		int openedLevel = PlayerPrefs.GetInt("currentOpenedLevel", 0);
 
 		for (int i = 0; i < lvlButtons.Length; i++)
 		{
-			if (i + 1 > levelAt)
+			if (i  > openedLevel)
 				lvlButtons[i].interactable = false;
 		}
 	}
-	public void LoadLevel1()
-	{
-		SceneManager.LoadScene("Level1");
-	}
-	public void LoadLevel2()
-	{
-		SceneManager.LoadScene("Level2");
-	}
-	public void LoadLevel3()
-	{
-		SceneManager.LoadScene("Level3");
-	}
+	public void LoadLevel() => SceneManager.LoadScene("Game");
 	public void QuitGame() => Application.Quit();
 }
