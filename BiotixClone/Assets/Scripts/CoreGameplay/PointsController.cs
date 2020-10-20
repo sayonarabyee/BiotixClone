@@ -44,18 +44,9 @@ public class PointsController : Singleton<PointsController>, IBeginDragHandler, 
         }
         selectedCells.Clear();
     } 
-    public void OnBeginDrag(PointerEventData eventData)
-    {
-        isDrag = true;
-    }
-    public void OnDrag(PointerEventData eventData)
-    {
-        pointer.position = eventData.position;
-    }
-    public void OnEndDrag(PointerEventData eventData)
-    {
-        CreatePath();
-    }
+    public void OnBeginDrag(PointerEventData eventData) => isDrag = true;
+    public void OnDrag(PointerEventData eventData) => pointer.position = eventData.position;
+    public void OnEndDrag(PointerEventData eventData) => CreatePath();
 }
 
 

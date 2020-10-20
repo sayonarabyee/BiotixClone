@@ -60,7 +60,6 @@ public class Cell : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler, I
 		onChangeTeam.AddListener(EndGameCheck.Instance.Check);
 		onChangeTeam.AddListener(Bot.Instance.OnCellChangeTeam);
 	}
-
 	public void AddToBranch(int Points, SetTeam team)
 	{
 		if (Team == team)
@@ -158,15 +157,11 @@ public class Cell : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler, I
 	public void OnPointerEnter(PointerEventData eventData)
 	{
 		PointsController.Instance.cell = this;
-
 		if (PointsController.Instance.isDrag)
 		{
 			if (PointsController.Instance.PlayerTeam == team)
 			{
-				if (PointsController.Instance.AddCell(this))
-				{
-
-				}
+				PointsController.Instance.AddCell(this);
 			}
 			else if (PointsController.Instance.PlayerTeam != team && PointsController.Instance.selectedCells.Count >= 1)
 			{
@@ -174,28 +169,21 @@ public class Cell : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler, I
 			}
 		}
 	}
-
 	public void OnPointerExit(PointerEventData eventData)
 	{
 		if (PointsController.Instance.cell == this)
-		{
 			PointsController.Instance.cell = null;
-		}
 	}
-
 	public void OnPointerClick(PointerEventData eventData)
 	{
 		PointsController.Instance.cell = this;
 		if (PointsController.Instance.PlayerTeam == team)
 		{
 			if (PointsController.Instance.AddCell(this))
-			{
 				return;
-			}
+
 			else
-			{
 				PointsController.Instance.CreatePath();
-			}
 		}
 		else if (PointsController.Instance.PlayerTeam != team && PointsController.Instance.selectedCells.Count >= 1)
 		{

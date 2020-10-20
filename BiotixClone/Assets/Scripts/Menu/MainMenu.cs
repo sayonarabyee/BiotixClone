@@ -8,7 +8,7 @@ public class MainMenu : MonoBehaviour
 	
 	void Start()
 	{
-		int levelAt = PlayerPrefs.GetInt("levelAt", 1);
+		int levelAt = PlayerPrefs.GetInt("levelAt", 0);
 
 		for (int i = 0; i < lvlButtons.Length; i++)
 		{
@@ -28,8 +28,5 @@ public class MainMenu : MonoBehaviour
 	{
 		SceneManager.LoadScene("Level3");
 	}
-	public void QuitGame()
-	{
-		Application.Quit();
-	}
+	public void QuitGame() => Application.Quit();
 }

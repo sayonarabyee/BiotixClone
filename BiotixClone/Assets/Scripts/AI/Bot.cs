@@ -2,6 +2,7 @@
 using System.Linq;
 using UnityEngine;
 
+[RequireComponent(typeof(Cell))]
 public class Bot : Singleton<Bot>
 {
 	[Header("Задает команду бота")]
